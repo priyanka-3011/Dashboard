@@ -81,7 +81,7 @@ with col4:
     st.pyplot(plt.gcf())
 
 # Final row: Trade Deficit by Category (Bar Plot)
-st.subheader("Top 10 Categories Contributing to Trade Deficit")
+#st.subheader("Top 10 Categories Contributing to Trade Deficit")
 category_trade = df.groupby(['Category', 'Import_Export'])['Value'].sum().unstack()
 category_trade['Trade_Deficit'] = category_trade['Import'] - category_trade['Export']
 
