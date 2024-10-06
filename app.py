@@ -113,7 +113,7 @@ if uploaded_file is not None:
     plt.ylabel('')  # Hides the y-label
     st.pyplot(plt)
 
-    # Trade Deficit Analysis
+    '''# Trade Deficit Analysis
     st.subheader("Top 10 Categories Contributing to Trade Deficit")
     category_trade = df.groupby(['Category', 'Import_Export'])['Value'].sum().unstack()
     category_trade['Trade_Deficit'] = category_trade['Import'] - category_trade['Export']
@@ -123,6 +123,6 @@ if uploaded_file is not None:
     plt.xlabel('Product Category', fontsize=12)
     plt.ylabel('Trade Deficit (in millions)', fontsize=12)
     plt.grid(True)
-    st.pyplot(plt)
+    st.pyplot(plt)'''
 else:
-    st.write("Imports_Exports_Dataset.csv")
+    st.write("Python project Term 1/Imports_Exports_Dataset.csv")
