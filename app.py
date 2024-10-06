@@ -7,8 +7,8 @@ import seaborn as sns
 st.set_page_config(layout="wide")
 
 # Title of the dashboard
-st.title('Trade Data Visualization Dashboard')
-st.write("This dashboard displays key visualizations related to imports and exports data.")
+st.title('Interactive Trade Data Visualization Dashboard')
+st.write("Use the filters below to explore the data interactively.")
 
 # Load fixed CSV file
 @st.cache
@@ -20,8 +20,23 @@ def load_data():
 # Load data
 df = load_data()
 
-# Adding a brief description of the dataset
-st.write("The dataset contains import and export data with various product categories and trade values over time.")
+# Adding slicers (filters)
+st.sidebar.header('Filter Data')
+
+# Trade Type Filter (Import/Export)
+trade_type = st.sidebar.selectbox("Select Trade Type", options=["Both", "Import", "Export"])
+if trade_type != "Both":
+    df = df[df['Import_Export'] == trade_type]
+
+# Product Category Filter
+categories = df['Category'].unique()
+selected_categories = st.sidebar.multiselect("Select Product Categories", options=categories, default=categories)
+df = df[df['Category'].isin(selected_categories)]
+
+# Date Range Filter (assuming the 'Date' column is in a datetime format)
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce')  # Convert 'Date' to datetime
+start_date, end_date = st.sidebar.date_input("Select Date Range", [df['Date'].min(), df['Date'].max()])
+df = df[(df['Date'] >= pd.to_datetime(start_date)) & (df['Date'] <= pd.to_datetime(end_date))]
 
 # Visualizations
 st.subheader("Visualizations")
@@ -90,7 +105,7 @@ trade_deficit_categories = category_trade.sort_values(by='Trade_Deficit', ascend
 # Full-width plot for the trade deficit
 plt.figure(figsize=(12, 6))
 trade_deficit_categories['Trade_Deficit'].nlargest(10).plot(kind='bar', color='lightcoral')
-plt.title('Top 10 Categories Contributing to Trade Deficit')
+#plt.title('Top 10 Categories Contributing to Trade Deficit')
 plt.xlabel('Product Category')
 plt.ylabel('Trade Deficit (in millions)')
 plt.grid(True)
