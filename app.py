@@ -125,4 +125,4 @@ if uploaded_file is not None:
     plt.grid(True)
     st.pyplot(plt)
 else:
-    st.write("Python project Term 1/Imports_Exports_Dataset.csv")
+    st.write("Imports_Exports_Dataset.csv")
